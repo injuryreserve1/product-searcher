@@ -3,16 +3,16 @@
 Веб-приложение для автоматизированного поиска товаров и их аналогов в глобальной сети на основе больших языковых моделей (LLM) и асинхронного веб-парсинга. Система извлекает характеристики из неструктурированных PDF-спецификаций или текстовых запросов, осуществляет интеллектуальный поиск аналогов и генерирует структурированные отчеты с оценкой релевантности.
 
 # Страница со входом
-<img width="770" height="425" alt="image" src="https://github.com/user-attachments/assets/177afca3-63ed-4782-a727-525eea0ef865" />
+<img width="1154" height="584" alt="image" src="https://github.com/user-attachments/assets/9c3f19ba-ed2a-43ec-97e0-676ffb9d196f" />
 
 # текстовое поле для ввода характеристик (либо драг н дроп файла)
-<img width="843" height="399" alt="image" src="https://github.com/user-attachments/assets/51c5bdb1-b785-4630-8232-12c9cc18bba6" />
+<img width="1263" height="517" alt="image" src="https://github.com/user-attachments/assets/1164113d-a21d-4ec2-b6d1-7ba814eba852" />
 
 # Далее ИИ формирует гибкий поисковый запрос, который можно дополнительно отредактировать
-<img width="751" height="384" alt="image" src="https://github.com/user-attachments/assets/c0c597a6-c9c8-45b4-88fe-6eb188076cd6" />
+<img width="1125" height="540" alt="image" src="https://github.com/user-attachments/assets/61d2a1a0-6612-404a-a12e-055c118341c3" />
 
 # результат поиска аналогов ввиде таблицы:
-<img width="759" height="490" alt="image" src="https://github.com/user-attachments/assets/775e7bb8-6d58-4eb4-afb8-2099127c1628" />
+<img width="1140" height="650" alt="image" src="https://github.com/user-attachments/assets/f4e562fb-39a4-47af-9eea-53680e799597" />
 
 ## 🚀 Основные возможности
 
