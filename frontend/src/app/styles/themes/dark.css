@@ -1,0 +1,27 @@
+.dark {
+  --bg-color-main: #020617;
+
+  --main-color: #0f172a;
+  --sec-color: #1e293b;
+  --sidebar-color: #0f172a;
+
+  --main-font-color: #ffffff;
+  --sec-font-color: #64748b;
+  --inverted-font-color: #ffffff;
+  --violet-font-color: #9333ea;
+  --exit-font-color: #f87171;
+  --error-bg: rgba(248, 113, 113, 0.2);
+
+  --user-text-font: #757575;
+
+  --btn-color: #a855f7;
+
+  --stroke-color: #ffffff;
+
+  --first-blob: #831843;
+  --second-blob: #4c1d95;
+
+  --user-avatar-bg: #a855f7;
+  --ai-avatar-bg: #1e293b;
+  --avatar-text: #ffffff;
+}

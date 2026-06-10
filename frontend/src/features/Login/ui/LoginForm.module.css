@@ -1,0 +1,21 @@
+.Form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.FooterText {
+  margin-top: 25px;
+  font-size: 13px;
+  color: var(--user-text-font);
+}
+
+.Link {
+  color: var(--violet-font-color);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.Link:hover {
+  text-decoration: underline;
+}

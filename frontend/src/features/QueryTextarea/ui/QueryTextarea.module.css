@@ -1,0 +1,48 @@
+.queryWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  animation: fadeIn 0.3s ease;
+}
+.queryHeader {
+  h3 {
+    color: var(--main-font-color);
+    margin-bottom: 4px;
+  }
+  p {
+    color: var(--sec-font-color);
+    font-size: 0.9rem;
+  }
+}
+.mainQueryInput {
+  /* width: 100%; */
+  padding: 16px;
+  border: 1px solid var(--stroke-color);
+  border-radius: 12px;
+  background-color: var(--sec-color);
+  color: var(--main-font-color);
+  font-family: inherit;
+  font-size: 1rem;
+  resize: vertical;
+  outline: none;
+
+  &:focus {
+    border-color: var(--btn-color);
+  }
+}
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.queryWrapper {
+  position: relative;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  overflow: hidden;
+}

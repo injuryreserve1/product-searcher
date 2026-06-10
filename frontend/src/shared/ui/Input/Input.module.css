@@ -1,0 +1,66 @@
+.InputGroup {
+  text-align: left;
+  width: 100%;
+}
+
+.Label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--sec-font-color);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.Input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid var(--stroke-color);
+  border-radius: 8px;
+  background-color: var(--sec-color);
+  font-size: 14px;
+  color: var(--main-font-color);
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.Input::placeholder {
+  color: var(--sec-font-color);
+  opacity: 0.6;
+}
+
+.Input:focus {
+  outline: none;
+  border-color: var(--violet-font-color);
+  background-color: var(--bg-color-main);
+}
+
+.Input.errorInput {
+  border-color: var(--exit-font-color);
+  background-color: var(--error-bg);
+  color: var(--main-font-color);
+}
+
+.Input.errorInput:focus {
+  border-color: var(--exit-font-color);
+  background-color: var(--error-bg);
+  box-shadow: 0 0 8px rgba(248, 113, 113, 0.4);
+}
+
+.errorMessage {
+  font-size: 11px;
+  color: var(--exit-font-color);
+  font-weight: 400;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

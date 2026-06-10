@@ -1,0 +1,23 @@
+.sidebarAction {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--inverted-font-color);
+  transition: background-color 0.2s ease;
+  font-size: 14px;
+  width: 100%;
+}
+
+.sidebarAction:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.iconWrapper {
+  width: 20px;
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+}

@@ -1,0 +1,140 @@
+/* .inputWrapper {
+  padding: 40px;
+  width: 100%;
+  max-width: 800px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background: linear-gradient(transparent, var(--bg-color-main));
+  border-radius: 24px;
+  position: relative;
+  transition: all 0.3s ease;
+} */
+
+/* .inputContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background: var(--main-color);
+  min-height: 64px;
+  border-radius: 16px;
+  padding: 12px 20px;
+  gap: 15px;
+  border: 2px solid transparent;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.dragActive .inputContainer {
+  border: 2px dashed var(--btn-color);
+  background-color: var(--second-blob);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(147, 51, 234, 0.1);
+}
+
+.inputContainer input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--main-font-color);
+}
+
+.uploadHint {
+  font-size: 10px;
+  color: var(--sec-font-color);
+  margin-top: 8px;
+  text-align: center;
+  opacity: 0.7;
+}
+
+.dragActive .uploadHint {
+  color: var(--violet-font-color);
+  opacity: 1;
+  font-weight: 600;
+} */
+
+.inputWrapper {
+  padding: clamp(16px, 4vw, 40px);
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background: linear-gradient(transparent, var(--bg-color-main));
+  border-radius: 24px;
+  position: relative;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.inputContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background: var(--main-color);
+  min-height: 56px;
+  border-radius: 16px;
+  padding: 12px clamp(12px, 3vw, 20px);
+  gap: 12px;
+  border: 2px solid transparent;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.dragActive .inputContainer {
+  border: 2px dashed var(--btn-color);
+  background-color: var(--second-blob);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(147, 51, 234, 0.1);
+}
+
+.inputContainer input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--main-font-color);
+  font-size: 16px;
+  width: 100%;
+}
+
+.uploadHint {
+  font-size: clamp(10px, 2.5vw, 12px);
+  color: var(--sec-font-color);
+  margin-top: 8px;
+  text-align: center;
+  opacity: 0.7;
+}
+
+.dragActive .uploadHint {
+  color: var(--violet-font-color);
+  opacity: 1;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .inputWrapper {
+    border-radius: 16px;
+  }
+
+  .inputContainer {
+    gap: 8px;
+    min-height: 48px;
+  }
+}
+
+@media (max-width: 400px) {
+  .inputContainer {
+    padding: 10px 12px;
+  }
+
+  .uploadHint {
+    line-height: 1.4;
+  }
+}

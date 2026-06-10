@@ -1,0 +1,21 @@
+.Button {
+  background-color: var(--btn-color);
+  color: var(--inverted-font-color);
+  border: none;
+  border-radius: 8px;
+  padding: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.Button:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.Button:active {
+  transform: translateY(0);
+}

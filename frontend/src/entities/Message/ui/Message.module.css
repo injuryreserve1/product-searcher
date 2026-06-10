@@ -1,0 +1,34 @@
+.userMessage,
+.aiMessage {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.userAvatar,
+.aiAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  color: var(--avatar-text);
+  flex-shrink: 0;
+  border: 2px solid var(--main-font-color);
+  box-shadow: 1px 1px 0px var(--main-font-color);
+}
+
+.userAvatar {
+  background-color: var(--user-avatar-bg);
+}
+
+.aiAvatar {
+  background-color: var(--ai-avatar-bg);
+}
+
+.messageText {
+  color: var(--user-text-font);
+  line-height: 1.5;
+}
