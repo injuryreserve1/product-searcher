@@ -8,9 +8,6 @@
 # текстовое поле для ввода характеристик (либо драг н дроп файла)
 <img width="1263" height="517" alt="image" src="https://github.com/user-attachments/assets/1164113d-a21d-4ec2-b6d1-7ba814eba852" />
 
-# Далее ИИ формирует гибкий поисковый запрос, который можно дополнительно отредактировать
-<img width="1125" height="540" alt="image" src="https://github.com/user-attachments/assets/61d2a1a0-6612-404a-a12e-055c118341c3" />
-
 # результат поиска аналогов ввиде таблицы:
 <img width="1140" height="650" alt="image" src="https://github.com/user-attachments/assets/f4e562fb-39a4-47af-9eea-53680e799597" />
 
