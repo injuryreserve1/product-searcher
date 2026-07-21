@@ -35,34 +35,3 @@ export async function callLLM(
     // return "[]";
   }
 }
-// import GigaChat from "gigachat";
-// import { Agent } from "https";
-// import dotenv from "dotenv";
-
-// dotenv.config();
-
-// export async function callLLM(sysPrompt: string, rawText: string | string[]) {
-//   const systemPrompt = sysPrompt;
-
-//   try {
-//     const client = new GigaChat({
-//       timeout: 10000,
-//       model: "GigaChat",
-//       credentials: process.env.GIGACHATAPI,
-//       httpsAgent: new Agent({ rejectUnauthorized: false }),
-//     });
-
-//     const response = await client.chat({
-//       messages: [
-//         { role: "system", content: systemPrompt },
-//         { role: "user", content: `Текст пользователя: "${rawText}"` },
-//       ],
-//     });
-//     let llmAnswer = response.choices[0].message.content || "";
-
-//     return llmAnswer;
-//   } catch (error: any) {
-//     console.error("Ошибка при работе с GigaChat в cleanQuery:", error.message);
-//     return rawText.slice(0, 100);
-//   }
-// }
