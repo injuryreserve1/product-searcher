@@ -32,7 +32,7 @@ export const LoginForm = () => {
   });
 
   return (
-    <Card title="Войдите, чтобы начать">
+    <Card title="Войдите, чтобы начать искать товары">
       <form className={cls.Form} onSubmit={formik.handleSubmit}>
         <Input
           placeholder="Ваше Имя"

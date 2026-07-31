@@ -1,5 +1,6 @@
 import { useState } from "react";
 import PromptInput from "@/widget/PromptInput/PromptInput";
+import Logout from "@/features/Logout";
 
 import cls from "./MainPage.module.css";
 import { useParams, useSearchParams } from "react-router-dom";
@@ -34,7 +35,13 @@ const MainPage = () => {
 
   return (
     <div className={cls.layout}>
+      <div className={cls.stepInfo}></div>
       <main className={cls.main}>
+        {step === 0 && (
+          <h2 className={cls.stepTitle}>
+            Введите характеристики или перетащите файл.
+          </h2>
+        )}
         {step === 0 && (
           <PromptInput
             chatId={id}
@@ -61,6 +68,9 @@ const MainPage = () => {
           authorId={chatData?.author}
         />
       )}
+      <div className={cls.logoutWrapper}>
+        <Logout />
+      </div>
     </div>
   );
 };

@@ -1,8 +1,10 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import cls from "./SpecsTable.module.css";
 import { extractJsonArray } from "@/shared/lib/parseJSON";
 import type { Chat } from "@/entities/ChatHistoryItem";
 import { useSearchParams } from "react-router-dom";
+import * as XLSX from "xlsx";
+import Button from "@/shared/ui/Button/Button";
 
 interface SpecsTableProps {
   chatData: Chat;
@@ -20,14 +22,62 @@ const SpecsTable = ({ chatData, onReset }: SpecsTableProps) => {
 
   const sortOrder = Number(searchParams.get("sortOrder")) || 0;
 
+  // const products = useMemo(() => {
+  //   if (!chatData?.messages) return [];
+
+  //   const resultMsg = chatData.messages.find((m) => m.stage === "result");
+  //   if (!resultMsg) return [];
+
+  //   let rawProducts = extractJsonArray(resultMsg.text);
+
+  //   if (sortOrder > 0) {
+  //     rawProducts = [...rawProducts].sort((a, b) => {
+  //       const priorityA = statusPriority[a.match_status] || 99;
+  //       const priorityB = statusPriority[b.match_status] || 99;
+
+  //       if (sortOrder === 1) return priorityA - priorityB;
+  //       if (sortOrder === 2) return priorityB - priorityA;
+  //       return 0;
+  //     });
+  //   }
+
+  //   return rawProducts;
+  // }, [chatData, sortOrder]);
+
   const products = useMemo(() => {
     if (!chatData?.messages) return [];
-
     const resultMsg = chatData.messages.find((m) => m.stage === "result");
     if (!resultMsg) return [];
 
     let rawProducts = extractJsonArray(resultMsg.text);
 
+    rawProducts = rawProducts.filter((product) => {
+      if (product?.match_status === "Не подходит") {
+        return false;
+      }
+
+      if (product?.match_status === "Подходит") {
+        return true;
+      }
+
+      const specs = product?.specifications;
+
+      if (!specs) return false;
+
+      if (Array.isArray(specs)) {
+        return specs.length > 0;
+      }
+
+      if (typeof specs === "object") {
+        return Object.keys(specs).length > 0;
+      }
+
+      if (typeof specs === "string") {
+        return specs.trim() !== "";
+      }
+
+      return false;
+    });
     if (sortOrder > 0) {
       rawProducts = [...rawProducts].sort((a, b) => {
         const priorityA = statusPriority[a.match_status] || 99;
@@ -42,24 +92,66 @@ const SpecsTable = ({ chatData, onReset }: SpecsTableProps) => {
     return rawProducts;
   }, [chatData, sortOrder]);
 
-  const updateSort = () => {
-    const currentOrder = Number(searchParams.get("sortOrder")) || 0;
-    const newValue = (currentOrder + 1) % 3;
+  console.log(products);
 
-    setSearchParams((prev) => {
-      const nextParams = new URLSearchParams(prev);
-      nextParams.set("sortOrder", String(newValue));
-      return nextParams;
+  useEffect(() => {
+    if (products.length > 0) {
+      localStorage.setItem("saved_products", JSON.stringify(products));
+    }
+  }, [products]);
+
+  // const updateSort = () => {
+  //   const currentOrder = Number(searchParams.get("sortOrder")) || 0;
+  //   const newValue = (currentOrder + 1) % 3;
+
+  //   setSearchParams((prev) => {
+  //     const nextParams = new URLSearchParams(prev);
+  //     nextParams.set("sortOrder", String(newValue));
+  //     return nextParams;
+  //   });
+  // };
+
+  const downloadExcel = () => {
+    const localData = localStorage.getItem("saved_products");
+    if (!localData) {
+      alert("Нет данных для скачивания!");
+      return;
+    }
+
+    const rawProducts = JSON.parse(localData);
+
+    const formattedData = rawProducts.map((prod: any) => {
+      const specsString = Object.entries(prod.specifications || {})
+        .map(([key, value]) => `${key} ${value}`)
+        .join("; ");
+
+      return {
+        "Название товара": prod.product_name,
+        "Статус соответствия": prod.match_status,
+        "Несоответствия (Характеристики)": specsString || "Нет изменений",
+        "Ссылка на товар": prod.url,
+      };
     });
+
+    const worksheet = XLSX.utils.json_to_sheet(formattedData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Продукты");
+
+    XLSX.writeFile(workbook, "products_report.xlsx");
   };
 
   return (
     <div className={cls.resultsWrapper}>
       <header className={cls.resultsHeader}>
         <h2>Результаты поиска</h2>
-        <button onClick={onReset} className={cls.resetBtn}>
-          Новый поиск
-        </button>
+        <div className={cls.actions}>
+          <Button onClick={downloadExcel} className={cls.resetBtn}>
+            Скачать Excel 📊
+          </Button>
+          <Button onClick={onReset} className={cls.resetBtn}>
+            Новый поиск
+          </Button>
+        </div>
       </header>
 
       <div className={cls.tableContainer}>
@@ -68,12 +160,12 @@ const SpecsTable = ({ chatData, onReset }: SpecsTableProps) => {
             <tr>
               <th>Наименование</th>
               <th>Характеристики</th>
-              <th onClick={updateSort}>
+              {/* <th onClick={updateSort}>
                 Статус
                 <span className={cls.sortIcon}>
                   {sortOrder === 1 ? " 🔽" : sortOrder === 2 ? " 🔼" : " ↕️"}
                 </span>
-              </th>
+              </th> */}
               <th>Ссылка</th>
             </tr>
           </thead>
@@ -83,7 +175,11 @@ const SpecsTable = ({ chatData, onReset }: SpecsTableProps) => {
                 <tr key={idx}>
                   <td className={cls.nameCell}>
                     <strong>
-                      {product.product_name.slice(0, 20) + "..."}{" "}
+                      {product.product_name
+                        ? product.product_name.length > 20
+                          ? product.product_name.slice(0, 20) + "..."
+                          : product.product_name
+                        : "Без названия"}
                     </strong>
                   </td>
 
@@ -124,13 +220,13 @@ const SpecsTable = ({ chatData, onReset }: SpecsTableProps) => {
                     )}
                   </td>
 
-                  <td className={cls.statusCell}>
+                  {/* <td className={cls.statusCell}>
                     <span className={cls.statusBadge}>
                       {typeof product.match_status === "string"
                         ? product.match_status
                         : "—"}
                     </span>
-                  </td>
+                  </td> */}
 
                   <td className={cls.linkCell}>
                     <a

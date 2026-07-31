@@ -57,43 +57,6 @@ router.post("/login", async (req: Request, res: Response) => {
   }
 });
 
-// router.post("/login", async (req: Request, res: Response) => {
-//   try {
-//     const { username, password } = req.body;
-//     const user = await loginUser({ username, password });
-
-//     const accessToken = jwt.sign({ userId: user._id }, config.jwt_access, {
-//       expiresIn: ACCESS_TOKEN_AGE / 1000,
-//     });
-//     const refreshToken = jwt.sign({ userId: user._id }, config.jwt_refresh, {
-//       expiresIn: REFRESH_TOKEN_AGE / 1000,
-//     });
-
-//     res.cookie("accessToken", accessToken, {
-//       maxAge: ACCESS_TOKEN_AGE,
-//       httpOnly: true,
-//       sameSite: "strict",
-//     });
-
-//     res.cookie("refreshToken", refreshToken, {
-//       maxAge: REFRESH_TOKEN_AGE,
-//       httpOnly: true,
-//       sameSite: "strict",
-//     });
-
-//     let chat = await Chat.findOne({ author: user._id }).sort({ createdAt: -1 });
-//     if (!chat) chat = await createChat(user._id.toString());
-
-//     return res.status(200).json({
-//       message: "Успешный вход",
-//       user: { id: user._id, username: user.username },
-//       activeChatId: chat._id,
-//     });
-//   } catch (err: any) {
-//     return res.status(401).json({ error: err.message });
-//   }
-// });
-
 router.post("/logout", async (_, res: Response) => {
   res.clearCookie("authcookie");
 

@@ -160,3 +160,13 @@
 .noData {
   color: var(--sec-font-color);
 }
+
+.actions > * {
+  margin: 0 10px;
+}
+
+.linkCell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
