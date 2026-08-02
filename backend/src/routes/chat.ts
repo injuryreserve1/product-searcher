@@ -16,22 +16,6 @@ import { User } from "../db/models/user";
 
 const router = Router();
 
-// router.get("/", requireAuth, async (req: Request, res: Response) => {
-//   try {
-//     const authorId = (req as any).auth.userId;
-
-//     const chat = await getChatsByAuthor(authorId);
-//     if (!chat || chat.length === 0) {
-//       const newChat = await createChat(authorId);
-//       return res.json([newChat]);
-//     }
-
-//     return res.json(chat);
-//   } catch (error: any) {
-//     return res.status(500).json({ error: error.message });
-//   }
-// });
-
 router.get("/:id", requireAuth, async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -127,110 +111,6 @@ router.post(
     }
   },
 );
-
-// router.post(
-//   "/startScraping",
-//   requireAuth,
-//   async (req: Request, res: Response) => {
-//     const { chatId, text } = req.body;
-//     const currentUserId = (req as any).auth.userId;
-
-//     if (!chatId || !text) {
-//       return res
-//         .status(400)
-//         .json({ error: "chatId and (text or file) are required" });
-//     }
-
-//     console.log("text", text);
-
-//     const [chat, user] = await Promise.all([
-//       Chat.findById(chatId),
-//       User.findById(currentUserId),
-//     ]);
-//     if (!chat) return res.status(404).json({ error: "Чат не найден" });
-//     if (!user) return res.status(404).json({ error: "Пользователь не найден" });
-//     if (chat.author.toString() !== currentUserId) {
-//       return res.status(403).json({ error: "Доступ запрещен" });
-//     }
-
-//     // console.log("DEBUG SETTINGS:", user?.settings);
-
-//     const sitesURL = await search(text);
-//     console.log("[debug] sitesURL", sitesURL);
-
-//     const checkedSites = await checkSites(text, sitesURL, user.settings);
-//     const summaryText =
-//       checkedSites.length > 0
-//         ? `Я проанализировал сайты и нашел следующие подходящие варианты:`
-//         : `К сожалению, по вашему запросу ничего не удалось найти.`;
-
-//     const finalChatState = await addMessage(
-//       chatId,
-//       "result",
-//       summaryText + "\n" + JSON.stringify(checkedSites),
-//     );
-
-//     console.log("\n\nfinal final fantazy", checkedSites);
-
-//     return res.status(200).json(finalChatState);
-//   },
-// );
-
-// router.post(
-//   "/startScraping",
-//   requireAuth,
-//   async (req: Request, res: Response) => {
-//     const { chatId, text } = req.body;
-//     const currentUserId = (req as any).auth.userId;
-
-//     if (!chatId || !text) {
-//       return res.status(400).json({ error: "chatId and text are required" });
-//     }
-
-//     const [chat, user] = await Promise.all([
-//       Chat.findById(chatId),
-//       User.findById(currentUserId),
-//     ]);
-//     if (!chat) return res.status(404).json({ error: "Чат не найден" });
-//     if (!user) return res.status(404).json({ error: "Пользователь не найден" });
-//     if (chat.author.toString() !== currentUserId) {
-//       return res.status(403).json({ error: "Доступ запрещен" });
-//     }
-
-//     const firstUserMessage = chat.messages.find(
-//       (msg) => msg.stage === "firstMessage", // firstMessage
-//     );
-
-//     const originalUserText = firstUserMessage ? firstUserMessage.text : text;
-//     console.log(
-//       "[DEBUG] Исходный текст пользователя для сверки:",
-//       originalUserText,
-//     );
-
-//     const sitesURL = await search(text);
-//     console.log("[debug] sitesURL", sitesURL);
-//     const checkedSites = await checkSites(
-//       originalUserText,
-//       sitesURL,
-//       user.settings,
-//     );
-
-//     const summaryText =
-//       checkedSites.length > 0
-//         ? `Я проанализировал сайты и нашел следующие подходящие варианты:`
-//         : `К сожалению, по вашему запросу ничего не удалось найти.`;
-
-//     const finalChatState = await addMessage(
-//       chatId,
-//       "result",
-//       summaryText + "\n" + JSON.stringify(checkedSites),
-//     );
-
-//     console.log("\n\nfinal final fantazy", checkedSites);
-
-//     return res.status(200).json(finalChatState);
-//   },
-// );
 
 router.post(
   "/startScraping",

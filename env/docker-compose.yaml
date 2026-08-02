@@ -1,6 +1,8 @@
 version: "3.6"
+name: fullstack+mongodb
 
 services:
+  # БАЗА ДАННЫХ MONGODB
   my-mongodb:
     image: mongo:4.2.3-bionic
     container_name: my-mongodb
@@ -15,10 +17,74 @@ services:
       - mongodb:/data/db
       - mongoconfig:/data/configdb
     networks:
-      - mongo_net
+      - main_net
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mongo",
+          "--eval",
+          "db.adminCommand('ping')",
+          "--username",
+          "admin",
+          "--password",
+          "admin",
+          "--authenticationDatabase",
+          "admin",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
+  # БЭКЕНД
+  my-backend:
+    build: ../backend
+    container_name: my-backend
+    ports:
+      - 3000:3000
+    environment:
+      - NODE_ENV=test
+      - PORT=3000
+      - DATABASE_URL=mongodb://my-mongodb:27017/AIchat
+      - DB_URI=mongodb://admin:admin@my-mongodb:27017/AIchat?authSource=admin
+      - JWT_ACCESS_SECRET=test_access_secret_123
+      - JWT_REFRESH_SECRET=test_refresh_secret_123
+    networks:
+      - main_net
+    depends_on:
+      my-mongodb:
+        condition: service_healthy
+
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "require('http').get('http://localhost:3000/api/v1/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ФРОНТЕНД (REACT + VITE)
+  my-frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+      args:
+        - VITE_BACKEND_URL=http://localhost:3000/
+    container_name: my-frontend
+    ports:
+      - 5173:80
+    networks:
+      - main_net
+    depends_on:
+      my-backend:
+        condition: service_healthy
+
+  # МОНГО КЛИЕНТ
   my-mongoclient:
-    build: ./my-mongoclient
     image: fabianlee/my-mongoclient:3.9
     container_name: my-mongoclient
     environment:
@@ -27,7 +93,7 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=admin
     networks:
-      - mongo_net
+      - main_net
     depends_on:
       - my-mongodb
 
@@ -36,5 +102,5 @@ volumes:
   mongoconfig:
 
 networks:
-  mongo_net:
+  main_net:
     driver: bridge

@@ -3,6 +3,7 @@ import cors from "cors";
 import { userRouter } from "./routes/user";
 import { chatRouter } from "./routes/chat";
 import cookieParser from "cookie-parser";
+import { healthRouter } from "./routes/health";
 
 const app = express();
 
@@ -19,9 +20,6 @@ app.use(cookieParser());
 
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/chat", chatRouter);
-
-app.get("/api/health", (req, res) => {
-  res.status(200).json({ status: "OK", timestamp: new Date() });
-});
+app.use("/api/v1/health", healthRouter);
 
 export { app };
