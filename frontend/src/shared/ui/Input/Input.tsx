@@ -7,7 +7,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const Input = (props: Props) => {
-  const { labelText, error, className, ...rest } = props;
+  const { labelText, error, className, name, ...rest } = props;
 
   const inputClasses = [cls.Input, error ? cls.errorInput : "", className].join(
     " ",
@@ -15,8 +15,12 @@ const Input = (props: Props) => {
 
   return (
     <div className={cls.InputGroup}>
-      {labelText && <label className={cls.Label}>{labelText}</label>}
-      <input className={inputClasses} {...rest} />
+      {labelText && (
+        <label htmlFor={name} className={cls.Label}>
+          {labelText}
+        </label>
+      )}
+      <input name={name} id={name} className={inputClasses} {...rest} />
       {typeof error === "string" && (
         <span className={cls.errorMessage}>{error}</span>
       )}

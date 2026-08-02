@@ -20,4 +20,8 @@ app.use(cookieParser());
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/chat", chatRouter);
 
+app.get("/api/health", (req, res) => {
+  res.status(200).json({ status: "OK", timestamp: new Date() });
+});
+
 export { app };
