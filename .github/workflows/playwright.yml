@@ -26,7 +26,6 @@ jobs:
         working-directory: ./frontend
         run: npm install --legacy-peer-deps
 
-      # Устанавливаем легкую утилиту для точного ожидания портов
       - name: Install wait-on utility globally
         run: npm install -g wait-on
 
@@ -56,7 +55,6 @@ jobs:
 
       - name: Run Playwright tests
         working-directory: ./frontend
-ы
         run: npx playwright test --project=chromium --workers=2
         env:
           BASE_URL: http://localhost:5173
