@@ -55,7 +55,7 @@ jobs:
 
       - name: Run Playwright tests
         working-directory: ./frontend
-        run: npx playwright test --project=chromium --workers=2
+        run: npx playwright test --project=chromium --workers=1
         env:
           BASE_URL: http://localhost:5173
 
