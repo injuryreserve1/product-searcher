@@ -22,6 +22,26 @@ jobs:
           cache: "npm"
           cache-dependency-path: ./frontend/package-lock.json
 
+      - name: Create environment files (.env)
+        run: |
+          mkdir -p frontend
+          mkdir -p backend
+          mkdir -p env
+
+          # 1. Записываем конфиг фронтенда
+          echo 'VITE_BACKEND_URL="http://localhost:${{ secrets.APP_PORT }}/"' > ./frontend/.env
+
+          # 2. Записываем конфиг бэкенда
+          echo "PORT=${{ secrets.APP_PORT }}" > ./backend/.env
+          echo 'DATABASE_URL="${{ secrets.DATABASE_URL }}"' >> ./backend/.env
+          echo 'DB_URI="${{ secrets.DB_URI }}"' >> ./backend/.env
+          echo "JWT_ACCESS_SECRET=${{ secrets.JWT_ACCESS_SECRET }}" >> ./backend/.env
+          echo "JWT_REFRESH_SECRET=${{ secrets.JWT_REFRESH_SECRET }}" >> ./backend/.env
+
+          # 3. ДУБЛИРУЕМ ИХ В ПАПКУ env (чтобы docker compose up гарантированно подхватил их на CI)
+          cp ./frontend/.env ./env/.env.frontend 2>/dev/null || cp ./frontend/.env ./env/.env
+          cp ./backend/.env ./env/.env.backend 2>/dev/null || true
+
       - name: Install dependencies
         working-directory: ./frontend
         run: npm install --legacy-peer-deps
@@ -50,8 +70,8 @@ jobs:
         working-directory: ./frontend
         run: npx playwright install-deps
 
-      - name: Wait for frontend server to be active
-        run: wait-on http://localhost:5173 --timeout 120000
+      - name: Wait for Frontend and Backend services to be active
+        run: wait-on http://localhost:5173 http://localhost:${{ secrets.APP_PORT }} --timeout 120000
 
       - name: Run Playwright tests
         working-directory: ./frontend
