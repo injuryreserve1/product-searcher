@@ -61,6 +61,11 @@ jobs:
         working-directory: frontend
         run: npx playwright install-deps
 
+      - name: Backend logs
+        if: always()
+        working-directory: ./env
+        run: docker compose logs my-backend
+
       - name: Run Playwright
         working-directory: frontend
         env:
