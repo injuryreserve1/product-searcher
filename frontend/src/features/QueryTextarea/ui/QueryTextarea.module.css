@@ -6,16 +6,11 @@
   max-width: 800px;
   margin: 0 auto;
   animation: fadeIn 0.3s ease;
+  background-color: var(--bg-color-main);
 }
-.queryHeader {
-  h3 {
-    color: var(--main-font-color);
-    margin-bottom: 4px;
-  }
-  p {
-    color: var(--sec-font-color);
-    font-size: 0.9rem;
-  }
+.queryHeader > h3,
+.queryHeader > p {
+  color: var(--main-font-color);
 }
 .mainQueryInput {
   /* width: 100%; */
@@ -37,12 +32,4 @@
   display: flex;
   justify-content: flex-end;
   gap: 12px;
-}
-
-.queryWrapper {
-  position: relative;
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 24px;
-  overflow: hidden;
 }

@@ -8,6 +8,7 @@ import { useGetChat } from "@/features/GetChat";
 import QueryTextarea from "@/features/QueryTextarea/ui/QueryTextarea";
 import SpecsTable from "@/features/SpecsTable";
 import Settings from "@/features/Settings/ui/Settings";
+import ThemeSwitcher from "@/shared/ui/ThemeSwitcher/ThemeSwitcher";
 
 const MainPage = () => {
   const { id } = useParams();
@@ -38,16 +39,16 @@ const MainPage = () => {
       <div className={cls.stepInfo}></div>
       <main className={cls.main}>
         {step === 0 && (
-          <h2 className={cls.stepTitle}>
-            Введите характеристики или перетащите файл.
-          </h2>
-        )}
-        {step === 0 && (
-          <PromptInput
-            chatId={id}
-            onOpenSettings={() => setIsSettingsOpen(true)}
-            onSuccess={handleSuccess}
-          />
+          <>
+            <h2 className={cls.stepTitle}>
+              Введите характеристики или перетащите файл.
+            </h2>
+            <PromptInput
+              chatId={id}
+              onOpenSettings={() => setIsSettingsOpen(true)}
+              onSuccess={handleSuccess}
+            />
+          </>
         )}
         {step === 1 && (
           <QueryTextarea
@@ -69,6 +70,7 @@ const MainPage = () => {
         />
       )}
       <div className={cls.logoutWrapper}>
+        <ThemeSwitcher />
         <Logout />
       </div>
     </div>

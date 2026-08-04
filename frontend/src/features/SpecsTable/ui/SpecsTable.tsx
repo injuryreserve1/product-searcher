@@ -18,31 +18,9 @@ const statusPriority: Record<string, number> = {
 };
 
 const SpecsTable = ({ chatData, onReset }: SpecsTableProps) => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   const sortOrder = Number(searchParams.get("sortOrder")) || 0;
-
-  // const products = useMemo(() => {
-  //   if (!chatData?.messages) return [];
-
-  //   const resultMsg = chatData.messages.find((m) => m.stage === "result");
-  //   if (!resultMsg) return [];
-
-  //   let rawProducts = extractJsonArray(resultMsg.text);
-
-  //   if (sortOrder > 0) {
-  //     rawProducts = [...rawProducts].sort((a, b) => {
-  //       const priorityA = statusPriority[a.match_status] || 99;
-  //       const priorityB = statusPriority[b.match_status] || 99;
-
-  //       if (sortOrder === 1) return priorityA - priorityB;
-  //       if (sortOrder === 2) return priorityB - priorityA;
-  //       return 0;
-  //     });
-  //   }
-
-  //   return rawProducts;
-  // }, [chatData, sortOrder]);
 
   const products = useMemo(() => {
     if (!chatData?.messages) return [];
@@ -100,17 +78,6 @@ const SpecsTable = ({ chatData, onReset }: SpecsTableProps) => {
     }
   }, [products]);
 
-  // const updateSort = () => {
-  //   const currentOrder = Number(searchParams.get("sortOrder")) || 0;
-  //   const newValue = (currentOrder + 1) % 3;
-
-  //   setSearchParams((prev) => {
-  //     const nextParams = new URLSearchParams(prev);
-  //     nextParams.set("sortOrder", String(newValue));
-  //     return nextParams;
-  //   });
-  // };
-
   const downloadExcel = () => {
     const localData = localStorage.getItem("saved_products");
     if (!localData) {
@@ -160,12 +127,7 @@ const SpecsTable = ({ chatData, onReset }: SpecsTableProps) => {
             <tr>
               <th>Наименование</th>
               <th>Характеристики</th>
-              {/* <th onClick={updateSort}>
-                Статус
-                <span className={cls.sortIcon}>
-                  {sortOrder === 1 ? " 🔽" : sortOrder === 2 ? " 🔼" : " ↕️"}
-                </span>
-              </th> */}
+
               <th>Ссылка</th>
             </tr>
           </thead>
@@ -220,14 +182,6 @@ const SpecsTable = ({ chatData, onReset }: SpecsTableProps) => {
                     )}
                   </td>
 
-                  {/* <td className={cls.statusCell}>
-                    <span className={cls.statusBadge}>
-                      {typeof product.match_status === "string"
-                        ? product.match_status
-                        : "—"}
-                    </span>
-                  </td> */}
-
                   <td className={cls.linkCell}>
                     <a
                       href={
@@ -246,7 +200,7 @@ const SpecsTable = ({ chatData, onReset }: SpecsTableProps) => {
               ))
             ) : (
               <tr>
-                <td colSpan={4} className={cls.emptyCell}>
+                <td colSpan={3} className={cls.emptyCell}>
                   Товары не найдены
                 </td>
               </tr>

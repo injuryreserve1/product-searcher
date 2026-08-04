@@ -1,8 +1,8 @@
-/* .layout {
+.layout {
   display: flex;
   height: 100vh;
   background-color: var(--bg-color-main);
-} */
+}
 
 .main {
   flex: 1;
@@ -87,7 +87,7 @@
 .stepTitle {
   font-size: 1.25rem;
   font-weight: 500;
-  color: #333;
+  color: var(--main-font-color);
 }
 .layout {
   position: relative;

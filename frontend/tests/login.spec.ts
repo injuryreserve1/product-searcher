@@ -1,25 +1,10 @@
 import { test, expect } from "@playwright/test";
 
+test.use({ storageState: { cookies: [], origins: [] } });
+
 test.describe("Страница авторизации (Компонент LoginForm)", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/login");
-  });
-
-  test("Успешный вход в аккаунт", async ({ page }) => {
-    const nameInput = page.getByLabel("ваше имя", { exact: false });
-    const passwordInput = page.getByLabel("Пароль");
-    const submitButton = page.getByRole("button", { name: "Войти в аккаунт" });
-
-    await nameInput.fill("765");
-    await passwordInput.fill("765");
-
-    await expect(submitButton).toBeEnabled();
-
-    await submitButton.click();
-
-    await page.waitForURL(/.*\/main\/.*/, { timeout: 7000 });
-
-    await expect(page).toHaveURL(/.*\/main\/.*/);
   });
 
   test("Ошибки валидации полей формы", async ({ page }) => {

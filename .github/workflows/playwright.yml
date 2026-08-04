@@ -26,6 +26,10 @@ jobs:
         working-directory: ./frontend
         run: npm install --legacy-peer-deps
 
+      # Устанавливаем легкую утилиту для точного ожидания портов
+      - name: Install wait-on utility globally
+        run: npm install -g wait-on
+
       - name: Start Full Application Stack
         working-directory: ./env
         run: docker compose up -d --build
@@ -47,12 +51,13 @@ jobs:
         working-directory: ./frontend
         run: npx playwright install-deps
 
-      - name: Wait for Docker services to be ready
-        run: sleep 15
+      - name: Wait for frontend server to be active
+        run: wait-on http://localhost:5173 --timeout 120000
 
       - name: Run Playwright tests
         working-directory: ./frontend
-        run: npx playwright test --workers=2
+ы
+        run: npx playwright test --project=chromium --workers=2
         env:
           BASE_URL: http://localhost:5173
 

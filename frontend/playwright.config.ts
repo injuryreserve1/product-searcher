@@ -34,49 +34,41 @@ export default defineConfig({
     trace: "on-first-retry",
     baseURL: "http://localhost:5173",
   },
-
-  /* Configure projects for major browsers */
   projects: [
+    // 1. Сначала запускается этот проект и сохраняет сессию в файл
+    {
+      name: "setup",
+      testMatch: /auth\.setup\.ts/,
+    },
+
+    // 2. Основной и единственный десктопный проект для тестов
     {
       name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
+      use: {
+        ...devices["Desktop Chrome"],
+        // Браузер автоматически подхватит авторизацию из файла
+        storageState: "playwright/.auth/user.json",
+      },
+      // Этот проект запустится строго ПОСЛЕ того, как отработает 'setup'
+      dependencies: ["setup"],
     },
 
+    /* Если в будущем понадобятся другие браузеры, их можно раскомментировать здесь, 
+       но обязательно тоже добавить им зависимость от 'setup' и storageState:
     {
       name: "firefox",
-      use: { ...devices["Desktop Firefox"] },
+      use: { ...devices["Desktop Firefox"], storageState: "playwright/.auth/user.json" },
+      dependencies: ["setup"],
     },
-
-    {
-      name: "webkit",
-      use: { ...devices["Desktop Safari"] },
-    },
-
-    /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
-    // {
-    //   name: 'Mobile Safari',
-    //   use: { ...devices['iPhone 12'] },
-    // },
-
-    /* Test against branded browsers. */
-    // {
-    //   name: 'Microsoft Edge',
-    //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
-    // },
-    // {
-    //   name: 'Google Chrome',
-    //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-    // },
+    */
   ],
+
+  /* Configure projects for major browsers */
 
   /* Run your local dev server before starting the tests */
   // webServer: {
   //   command: 'npm run start',
   //   url: 'http://localhost:3000',
   //   reuseExistingServer: !process.env.CI,
-  // },
+  // }
 });

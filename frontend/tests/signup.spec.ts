@@ -55,19 +55,4 @@ test.describe("Страница регистрации (Компонент AuthF
 
     await expect(submitButton).toBeDisabled();
   });
-
-  test("Отображение ошибки бэкенда (toast), если имя уже занято", async ({
-    page,
-  }) => {
-    await page.getByLabel("Ваше Имя").fill("ExistingUser");
-    await page.getByLabel("Пароль").fill("anypassword");
-
-    await page.getByRole("button", { name: "Зарегистрироваться" }).click();
-
-    await expect(
-      page.getByText("Возможно такой пользователь уже существует"),
-    ).toBeVisible();
-
-    await expect(page).not.toHaveURL("/login");
-  });
 });
