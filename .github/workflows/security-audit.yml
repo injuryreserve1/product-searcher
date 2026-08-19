@@ -25,6 +25,9 @@ jobs:
         with:
           node-version: 22
           cache: "npm"
+          cache-dependency-path: |
+            backend/package-lock.json
+            frontend/package-lock.json
 
       - name: Audit Backend Prod Dependencies
         run: npm audit --only=prod --audit-level=high
@@ -33,8 +36,12 @@ jobs:
       - name: Audit Front Prod Dependencies
         if: always()
         run: npm audit --only=prod --audit-level=high
-        working-directory: .frontend
+        working-directory: ./frontend
 
       - name: Audit Dev Dependencies (Log only)
         if: always()
-        run: npm audit --only=dev || true
+        run: |
+          echo "=== Backend Dev Audit ==="
+          cd backend && npm audit --only=dev || true
+          echo "=== Frontend Dev Audit ==="
+          cd ../frontend && npm audit --only=dev || true
