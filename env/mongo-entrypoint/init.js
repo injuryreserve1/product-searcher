@@ -5,7 +5,7 @@ db.users.updateOne(
   {
     $setOnInsert: {
       username: "765",
-      password: "$2b$10$k02VImFPYkWNyaptugONt.1uiNjcWfdGtu9E7tNCL42Om7todHPd.",
+      password: process.env.MONGO_INITDB_ROOT_PASSWORD_HASH,
       settings: {
         baseUrl: "https://api.proxy.com/v1",
         modelName: "gpt-4",
